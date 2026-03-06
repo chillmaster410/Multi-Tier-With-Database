@@ -11,7 +11,7 @@ pipeline {
             steps {
                 // Fixed: Added credentialsId to the git step
                 git branch: 'main', 
-                    credentialsId: 'github_access', 
+                    credentialsId: 'githubtoken', 
                     url: 'https://github.com/chillmaster410/test-multi'
             }
         }
@@ -35,4 +35,5 @@ pipeline {
         }          
     }
 }
+
 
