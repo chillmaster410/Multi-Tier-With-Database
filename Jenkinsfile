@@ -33,7 +33,14 @@ pipeline {
                 sh 'mvn package'
             }
         }          
+    
+    }
+    post {
+        success {
+            build job: 'start'
+        }
     }
 }
+
 
 
