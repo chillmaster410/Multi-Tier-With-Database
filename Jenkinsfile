@@ -5,12 +5,15 @@ pipeline {
         maven 'TMaven'
         jdk 'java17'
     }
+    parameters{
+        string(name: 'Branch_name', defaultvalue: 'main', description:'GIT branch name to build')
+    }
 
     stages {
         stage('Git_Checkout') {
             steps {
                 // Fixed: Added credentialsId to the git step
-                git branch: 'main', 
+                git branch: "${params.Branch_name}", 
                     credentialsId: 'githubtoken', 
                     url: 'https://github.com/chillmaster410/test-multi'
             }
@@ -41,6 +44,7 @@ pipeline {
         }
     }
 }
+
 
 
 
