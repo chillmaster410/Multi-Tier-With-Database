@@ -6,7 +6,7 @@ pipeline {
         jdk 'java17'
     }
     parameters{
-        string(name: 'Branch_name', defaultvalue: 'main', description:'GIT branch name to build')
+        string(name: 'Branch_name', defaultValue: 'main', description:'GIT branch name to build')
     }
 
     stages {
@@ -44,6 +44,7 @@ pipeline {
         }
     }
 }
+
 
 
 
