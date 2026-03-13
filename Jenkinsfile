@@ -1,9 +1,18 @@
 pipeline {
-    agent any
-    
-    tools {
-        maven 'TMaven'
-        jdk 'java17'
+    agent {
+        kubernetes {
+            yaml '''
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: maven
+    image: maven:3.9.6-eclipse-temurin-17
+    command:
+    - cat
+    tty: true
+'''
+        }
     }
 
     stages {
@@ -35,3 +44,4 @@ pipeline {
         }          
     }
 }
+
