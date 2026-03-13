@@ -14,12 +14,16 @@ spec:
 '''
         }
     }
+    
+    parameters {
+        string(name: 'Branch_name', defaultValue: 'main', description: 'GIT branch name to build')
+    }
 
     stages {
         stage('Git_Checkout') {
             steps {
-                // Fixed: Added credentialsId to the git step
-                git branch: 'main', 
+                // We do checkout in the default 'jnlp' agent container
+                git branch: "${params.Branch_name}", 
                     credentialsId: 'githubtoken', 
                     url: 'https://github.com/chillmaster410/test-multi'
             }
@@ -27,21 +31,26 @@ spec:
 
         stage('Compile') {
             steps {
-                sh 'mvn compile'
+                container('maven') {
+                    sh 'mvn compile'
+                }
             }
         }
     
         stage('Test') {
             steps {
-                sh 'mvn test'
+                container('maven') {
+                    sh 'mvn test'
+                }
             }
         }
    
         stage('Package') {
             steps {
-                sh 'mvn package'
+                container('maven') {
+                    sh 'mvn package'
+                }
             }
         }          
     }
 }
-
