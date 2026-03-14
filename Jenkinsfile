@@ -38,6 +38,9 @@ spec:
         }
     
         stage('Test') {
+            when {
+                changeset "pom.xml"
+            }
             steps {
                 container('maven') {
                     sh 'mvn test'
