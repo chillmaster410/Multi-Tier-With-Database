@@ -1,0 +1,45 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- None
+
+pool:
+  name: LAptop
+
+stages:
+
+- stage: Compile
+  displayName: 'Maven Compile Stage'
+  jobs:
+  - job: CompileJob
+    steps:
+    - script: mvn clean compile
+      displayName: 'Run mvn compile'
+
+- stage: Test
+  displayName: 'Maven Test Stage'
+  dependsOn: Compile
+  jobs:
+  - job: TestJob
+    steps:
+    - script: mvn test
+      displayName: 'Run mvn test'
+
+- stage: Cleanup
+  displayName: 'Final Cleanup'
+  dependsOn: '*'        # 🔥 depends on ALL previous stages
+  condition: always()
+  jobs:
+  - job: CleanupJob
+    steps:
+    - script: |
+        echo "Cleaning workspace: $(Pipeline.Workspace)"
+        rm -rf $(Pipeline.Workspace)/*
+
+
+
+
+     
