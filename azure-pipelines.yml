@@ -30,7 +30,6 @@ stages:
 
 - stage: Cleanup
   displayName: 'Final Cleanup'
-  dependsOn: '*'        # 🔥 depends on ALL previous stages
   condition: always()
   jobs:
   - job: CleanupJob
