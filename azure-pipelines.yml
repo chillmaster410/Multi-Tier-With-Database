@@ -27,6 +27,24 @@ stages:
     steps:
     - script: mvn test
       displayName: 'Run mvn test'
+    
+
+
+
+- stage: Sonar
+  displayName: 'sonar_scan'
+  dependsOn: Test
+  jobs:
+  - job: sonar
+    steps:
+    - task: SonarQubePrepare@8
+      inputs:
+        SonarQube: 'sonar-svc'
+        scannerMode: 'other'
+        projectKey: 'Testing'
+        projectName: 'Testing'
+    - script: mvn verify sonar:sonar
+
 
 - stage: Cleanup
   displayName: 'Final Cleanup'
@@ -37,6 +55,7 @@ stages:
     - script: |
         echo "Cleaning workspace: $(Pipeline.Workspace)"
         rm -rf $(Pipeline.Workspace)/*
+
 
 
 
