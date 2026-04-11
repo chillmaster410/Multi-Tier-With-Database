@@ -40,12 +40,14 @@ stages:
     - task: SonarQubePrepare@8
       inputs:
         SonarQube: 'sonar-svc'
-        scannerMode: 'other'
-        projectKey: 'Testing'
-        projectName: 'Testing'
-    - script: mvn verify sonar:sonar
+        scannerMode: 'cli'
+        configMode: 'file'
+    - script: 'Run sonar scanner'
 
-
+    - task: SonarQubeAnalyze@8
+      inputs:
+        jdkversion: 'JAVA_HOME'
+        
 - stage: Cleanup
   displayName: 'Final Cleanup'
   condition: always()
