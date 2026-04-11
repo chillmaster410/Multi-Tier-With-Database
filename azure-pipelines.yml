@@ -42,7 +42,7 @@ stages:
         SonarQube: 'sonar-svc'
         scannerMode: 'cli'
         configMode: 'file'
-    - script: 'Run sonar scanner'
+    - script: sonar scanner
 
     - task: SonarQubeAnalyze@8
       inputs:
